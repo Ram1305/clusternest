@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 const Admin = require('../models/Admin');
-const dotenv = require('dotenv');
-
-dotenv.config();
+const { requireEnv } = require('../config/env');
 
 const createAdmin = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(requireEnv('MONGODB_URI'));
     console.log('MongoDB Connected');
 
     // Check if admin already exists

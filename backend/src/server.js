@@ -1,11 +1,9 @@
+require('./config/env');
+
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const dotenv = require('dotenv');
 const connectDB = require('./config/database');
-
-// Load env vars
-dotenv.config();
 
 // Connect to database
 connectDB();

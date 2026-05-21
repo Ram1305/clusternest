@@ -90,7 +90,32 @@ The app uses [Google Fonts](https://fonts.google.com/specimen/Poppins) (Poppins)
 
 ## Production Deployment
 
-### Backend
+### Backend (PM2)
+
+On the server, `.env` is not in git — you must create it once:
+
+```bash
+cd ~/clusternest/clusternest/backend   # adjust to your deploy path
+cp .env.example .env
+nano .env   # set MONGODB_URI and other secrets
+npm install
+pm2 delete clusternest 2>/dev/null || true
+pm2 start ecosystem.config.js
+pm2 save
+```
+
+After pulling code updates:
+
+```bash
+cd backend
+git pull
+npm install
+pm2 restart clusternest
+pm2 logs clusternest --lines 30
+```
+
+You should see `MongoDB Connected: ...` in the logs. If you see `Missing required environment variable: MONGODB_URI`, the `.env` file is missing or empty on the server.
+
 - Use PM2 or similar process manager
 - Enable HTTPS
 - Set proper CORS origins
